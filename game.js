@@ -16,7 +16,7 @@ obstTop.src = "./images/top.png";
 obstDown.src = "./images/down.png";
 
 //Variables
-const gap = 150;
+const gap = 160;
 let constant;
 
 let bX = 50;
@@ -47,23 +47,23 @@ let obst = [];
 obst[0] = {
   x: cvs.width,
   y: 0,
-  width: obstTop.width,
-  height: obstTop.height,
+  width: 120,
+  height: 200,
 };
 
 obst[1] = {
   x: cvs.width,
   y: cvs.height - 200,
-  width: obstDown.width,
-  height: obstDown.height,
+  width: 120,
+  height: 200,
 };
 
 function isCollide(a, b) {
   return !(
-    a.y + a.height < b.y ||
-    a.y > b.y + b.height ||
-    a.x + a.width < b.x ||
-    a.x > b.x + b.width
+    ((a.y + a.height) < (b.y)) ||
+    (a.y > (b.y + b.height)) ||
+    ((a.x + a.width) < b.x) ||
+    (a.x > (b.x + b.width))
   );
 }
 
@@ -95,10 +95,14 @@ function draw() {
 
   for (let i = 0; i < obst.length; i++) {
     //constant = obstTop.height + gap;
+    if (obst[i].y < 200 ) {
     ctx.drawImage(obstTop, obst[i].x, obst[i].y, obst[i].width, obst[i].height);
-    //ctx.drawImage(obstDown, obst[i].x, obst[i].y, obst[i].width, obst[i] + 350);
+    }else{
+   ctx.drawImage(obstDown, obst[i].x, obst[i].y, obst[i].width, obst[i].height + 300);
+    }
+     obst[i].x--;
 
-    obst[i].x--;
+let topHeight = (Math.random()*100)+20
 
     if (obst[i].x === 150) {
       if (i % 2) {
@@ -106,16 +110,16 @@ function draw() {
           //push one element in the final array
           x: cvs.width, //set a x coordinate od the new obstacle according to our canvas width
           y: 0,
-          width: obstTop.width,
-          height: obstTop.height,
+          width: 120,
+          height:200
         });
       } else {
         obst.push({
           //push one element in the final array
           x: cvs.width,
-          y: cvs.height - 200,
-          width: obstDown.width,
-          height: obstDown.height,
+          y: cvs.height - topHeight - gap,
+          width: 120,
+          height: 300,
         });
       }
     }
